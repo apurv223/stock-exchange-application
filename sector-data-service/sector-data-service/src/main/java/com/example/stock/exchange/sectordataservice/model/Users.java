@@ -1,4 +1,5 @@
-package com.example.stock.exchange.companydataservice.model;
+package com.example.stock.exchange.sectordataservice.model;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,12 +13,17 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Sectors {
+public class Users {
+
     @Id
     @GeneratedValue
     private Long id;
-    private int companyCode;
-    private String sectorId;
-    private String sector;
+	private String username;
+	private String password;
+	private String userType;//(if Admin or normal User)
+	private String email;
+	private long mobileNumber;
+	private int confirmed;
+
 
 }

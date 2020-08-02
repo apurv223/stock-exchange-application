@@ -1,4 +1,4 @@
-package com.example.stock.exchange.companydataservice.model;
+package com.example.stock.exchange.sectordataservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
