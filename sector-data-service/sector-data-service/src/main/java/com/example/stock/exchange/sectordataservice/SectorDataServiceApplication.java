@@ -1,5 +1,6 @@
 package com.example.stock.exchange.sectordataservice;
 
+import brave.sampler.Sampler;
 import com.example.stock.exchange.sectordataservice.model.Company;
 import com.example.stock.exchange.sectordataservice.model.IpoDetails;
 import com.example.stock.exchange.sectordataservice.model.Sectors;
@@ -11,11 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 
 import java.sql.Date;
 import java.util.Arrays;
 
 @SpringBootApplication
+
+
+@EnableFeignClients("com.example.stock.exchange.sectordataservice")
+@EnableDiscoveryClient
+
 public class SectorDataServiceApplication implements CommandLineRunner {
 	@Autowired
 	SectorsRepository sectorsRepository;
@@ -51,5 +60,10 @@ public class SectorDataServiceApplication implements CommandLineRunner {
 		stockPriceRepository.save(new StockPrice(Long.getLong("3"),103,456.2,"NSE",Date.valueOf("2020-01-06")));
 		stockPriceRepository.save(new StockPrice(Long.getLong("4"),104,456.2,"NSE",Date.valueOf("2020-01-06")));
 		System.out.println(stockPriceRepository.getAll(Arrays.asList(103,104), Date.valueOf("2020-01-04"),Date.valueOf("2020-01-06")));
+	}
+
+	@Bean
+	public Sampler defaultSampler() {
+		return Sampler.ALWAYS_SAMPLE;
 	}
 }

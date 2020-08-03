@@ -22,7 +22,7 @@ public class SectorsDetailsController {
     }
 
     @RequestMapping("/sector/price/{sectorId}/from/{from}/to/{to}")
-    public ResponseEntity<Double> getSectorPrice(@PathVariable String sectorId, String from, String to){
+    public ResponseEntity<Double> getSectorPrice(@PathVariable String sectorId,@PathVariable String from,@PathVariable String to){
         return ResponseEntity.status(HttpStatus.FOUND).body(sectorsDetailsService.getSectorPrice(sectorId,from,to));
     }
 }

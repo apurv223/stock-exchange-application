@@ -1,5 +1,6 @@
 package com.example.stock.exchange.companydataservice;
 
+import brave.sampler.Sampler;
 import com.example.stock.exchange.companydataservice.model.Company;
 import com.example.stock.exchange.companydataservice.model.IpoDetails;
 import com.example.stock.exchange.companydataservice.model.StockPrice;
@@ -10,10 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 
 import java.sql.Date;
 
 @SpringBootApplication
+@EnableFeignClients("com.example.stock.exchange.companydataservice")
+@EnableDiscoveryClient
 public class CompanyDataServiceApplication implements CommandLineRunner {
 
 	@Autowired
@@ -41,7 +47,10 @@ public class CompanyDataServiceApplication implements CommandLineRunner {
 		//query url:-> http://localhost:8080/company/ipo/SBI
 		ipoDetailsRepository.save(new IpoDetails(Long.getLong("1"),"SBI","NSE",456.3,456789,Date.valueOf("2020-01-04"),"Great growth"));
 		ipoDetailsRepository.save(new IpoDetails(Long.getLong("1"),"SBC","NSE",456.3,456789,Date.valueOf("2020-01-04"),"Great growth"));
+	}
 
-
+	@Bean
+	public Sampler defaultSampler() {
+		return Sampler.ALWAYS_SAMPLE;
 	}
 }
