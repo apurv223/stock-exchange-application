@@ -24,7 +24,6 @@ import java.util.Arrays;
 
 @EnableFeignClients("com.example.stock.exchange.sectordataservice")
 @EnableDiscoveryClient
-
 public class SectorDataServiceApplication implements CommandLineRunner {
 	@Autowired
 	SectorsRepository sectorsRepository;

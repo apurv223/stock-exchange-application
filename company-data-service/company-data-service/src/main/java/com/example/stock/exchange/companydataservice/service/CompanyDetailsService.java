@@ -37,7 +37,7 @@ public class CompanyDetailsService implements ICompanyDetailsService {
 
     @Override
     @Transactional
-    public Iterable<CompanyDTO> getAllCompanies()
+    public List<CompanyDTO> getAllCompanies()
     {
         List<Company> companyList = companyRepository.findAll();
         /*  if(userEntity==null)
@@ -47,7 +47,7 @@ public class CompanyDetailsService implements ICompanyDetailsService {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         Type listType = new TypeToken<Iterable<CompanyDTO>>(){}.getType();
-        Iterable<CompanyDTO> postDtoList = modelMapper.map(companyList,listType);
+        List<CompanyDTO> postDtoList = modelMapper.map(companyList,listType);
         return postDtoList;
     }
 
@@ -111,5 +111,44 @@ public class CompanyDetailsService implements ICompanyDetailsService {
         IpoDetailsDTO ipoDetailsDTO = new IpoDetailsDTO();
         modelMapper.map(ipoDetails,ipoDetailsDTO);
         return Optional.of(ipoDetailsDTO);
+    }
+
+    @Override
+    @Transactional
+    public Optional<IpoDetailsDTO> addIpo(IpoDetailsDTO ipoDetailsDTO) {
+        IpoDetails ipoDetails = new IpoDetails();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.map(ipoDetailsDTO,ipoDetails);
+        ipoDetailsRepository.save(ipoDetails);
+        return Optional.of(ipoDetailsDTO);
+    }
+
+    @Override
+    public List<IpoDetailsDTO> getAllIpo() {
+       List<IpoDetails> ipoList = ipoDetailsRepository.findAll();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        Type listType = new TypeToken<Iterable<IpoDetailsDTO>>(){}.getType();
+        List<IpoDetailsDTO> postDtoList = modelMapper.map(ipoList,listType);
+        return postDtoList;
+    }
+
+    @Override
+    @Transactional
+    public Optional<CompanyDTO> updateCompany(CompanyDTO companyDTO) {
+        ModelMapper maper = new ModelMapper();
+        Company oldCompany = companyRepository.findByCompanyCode(companyDTO.getCompanyCode());
+        Company newComp = maper.map(companyDTO,Company.class);
+        newComp.setId(oldCompany.getId());
+        companyRepository.save(newComp);
+        return Optional.of(companyDTO);
+    }
+
+    @Override
+    public Optional<CompanyDTO> deleteCompany(CompanyDTO dto) {
+        ModelMapper map = new ModelMapper();
+        companyRepository.delete(companyRepository.findByCompanyCode(dto.getCompanyCode()));
+        return Optional.empty();
     }
 }

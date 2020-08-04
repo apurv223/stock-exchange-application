@@ -5,12 +5,10 @@ import com.example.stock.exchange.stockexchangedataservice.dto.StockExchangeDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name="netflix-zuul-api-gateway-server")
+@CrossOrigin(origins = "http://localhost:4200")
 public interface ProxyStockExchangeService {
 
     @RequestMapping(value = "/exchange/all",method = RequestMethod.GET)

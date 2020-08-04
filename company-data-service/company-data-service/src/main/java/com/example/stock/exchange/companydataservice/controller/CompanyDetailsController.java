@@ -24,42 +24,69 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/company")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CompanyDetailsController {
 
     @Autowired
     ICompanyDetailsService companyDetailsService;
 
-    @RequestMapping(value = "/company/all", method = RequestMethod.GET)
-    public ResponseEntity<Iterable<CompanyDTO>> getAllCompanyDetails()
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<CompanyDTO>> getAllCompanyDetails()
     {
         return ResponseEntity.status(HttpStatus.FOUND).body(companyDetailsService.getAllCompanies());
     }
 
-    @RequestMapping(value = "/company/add", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Optional<CompanyDTO>> addCompany(@RequestBody CompanyDTO companyDTO)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(companyDetailsService.addCompany(companyDTO));
     }
 
-    @RequestMapping(value = "/company/companyCode/{companyCode}", method = RequestMethod.GET)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResponseEntity<Optional<CompanyDTO>> updateCompany(@RequestBody CompanyDTO companyDTO)
+    {
+        return ResponseEntity.status(HttpStatus.CREATED).body(companyDetailsService.updateCompany(companyDTO));
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<Optional<CompanyDTO>> deleteCompany(@RequestBody CompanyDTO companyDTO)
+    {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(companyDetailsService.deleteCompany(companyDTO));
+    }
+
+    @RequestMapping(value = "/companyCode/{companyCode}", method = RequestMethod.GET)
     public ResponseEntity<Optional<CompanyDTO>> getCompanyByCompanyCode(@PathVariable int companyCode){
         return ResponseEntity.status(HttpStatus.FOUND).body(companyDetailsService.getCompanyByCompanyCode(companyCode));
     }
 
-    @RequestMapping(value = "/company/regex/{regex}", method = RequestMethod.GET)
+    @RequestMapping(value = "/regex/{regex}", method = RequestMethod.GET)
     public ResponseEntity<List<CompanyDTO>> getCompanyByRegex(@PathVariable String regex){
         return ResponseEntity.status(HttpStatus.FOUND).body(companyDetailsService.getCompanyByRegex(regex));
     }
 
-    @RequestMapping(value = "/company/stock/{companyCode}/{from}/{to}")
+    @RequestMapping(value = "/stock/{companyCode}/{from}/{to}")
     public ResponseEntity<Double> getCompanyStockPrice(@PathVariable int companyCode,@PathVariable String from,@PathVariable String to) throws ParseException {
         return ResponseEntity.status(HttpStatus.FOUND).body(companyDetailsService.getCompanyStockPrice(companyCode,from,to));
     }
 
-    @RequestMapping(value = "/company/ipo/{companyName}")
+    @RequestMapping(value = "/ipo/{companyName}")
     public ResponseEntity<Optional<IpoDetailsDTO>> getIpoDetails(@PathVariable String companyName)
     {
         return ResponseEntity.status(HttpStatus.FOUND).body(companyDetailsService.getIpoDetails(companyName));
+    }
+
+    @RequestMapping(value = "/ipo", method = RequestMethod.POST)
+    public ResponseEntity<Optional<IpoDetailsDTO>> addIpo(@RequestBody IpoDetailsDTO ipoDetailsDTO)
+    {
+        return ResponseEntity.status(HttpStatus.CREATED).body(companyDetailsService.addIpo(ipoDetailsDTO));
+    }
+
+    @RequestMapping(value = "/ipo/all", method = RequestMethod.GET)
+    public ResponseEntity<List<IpoDetailsDTO>> getALlIpo()
+    {
+        return ResponseEntity.status(HttpStatus.FOUND).body(companyDetailsService.getAllIpo());
     }
 
 }

@@ -9,14 +9,14 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example.microservices</groupId>
-	<artifactId>netflix-zuul-api-gateway-server</artifactId>
+	<artifactId>admin-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>netflix-zuul-api-gateway-server</name>
+	<name>admin-server</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>14</java.version>
-		<spring-cloud.version>Hoxton.SR6</spring-cloud.version>
+		<spring-boot-admin.version>2.2.4</spring-boot-admin.version>
 	</properties>
 
 	<dependencies>
@@ -25,21 +25,12 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<artifactId>spring-boot-admin-starter-server</artifactId>
 		</dependency>
 
 		<dependency>
@@ -64,17 +55,9 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
-			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-dependencies</artifactId>
-				<version>2.2.4</version>
+				<version>${spring-boot-admin.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
